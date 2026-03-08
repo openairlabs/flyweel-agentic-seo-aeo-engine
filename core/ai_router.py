@@ -443,7 +443,7 @@ Return ONLY the optimized title (no quotes, no explanation):"""
                 optimized_title = response.text.strip().strip('"\'')
             else:
                 logger.warning("No AI client available for title optimization")
-                return title
+                return current_title
 
             # Validation checks
             validation_issues = []
