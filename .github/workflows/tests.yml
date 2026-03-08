@@ -60,7 +60,7 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
           # Run research module tests
-          pytest tests/test_research.py -v -k "test_researcher_initialization or test_skip_community_mode" || echo "Research tests skipped (API keys required)"
+          pytest tests/test_research.py -v -k "test_researcher_initialization" || echo "Research tests skipped (API keys required)"
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4

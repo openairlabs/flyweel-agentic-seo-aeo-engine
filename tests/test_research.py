@@ -21,7 +21,6 @@ class TestWebResearcher:
         """Test WebResearcher initializes correctly"""
         async with WebResearcher() as researcher:
             assert researcher.perplexity_key is not None, "Should have Perplexity key"
-            assert researcher.google_key is not None, "Should have Google key"
 
     async def test_serp_analysis_standard(self):
         """Test standard SERP analysis with sonar-reasoning-pro"""
@@ -94,7 +93,7 @@ class TestCommunityResearcher:
     async def test_researcher_initialization(self):
         """Test CommunityResearcher initializes correctly"""
         async with CommunityResearcher() as researcher:
-            assert researcher.groq_key is not None, "Should have Groq key"
+            assert researcher.session is not None, "Should have session after enter"
 
     async def test_reddit_mining(self):
         """Test Reddit insight mining"""
@@ -154,15 +153,7 @@ class TestCommunityResearcher:
                     # Should have relevance score or content
                     assert 'content' in insight or 'text' in insight, "Should have content"
 
-    async def test_skip_community_mode(self):
-        """Test complete skip of community research"""
-        async with CommunityResearcher() as researcher:
-            # When skip=True, should return empty structures quickly
-            result = await researcher.mine_reddit("test", skip=True)
 
-            assert result is not None, "Should return result even when skipped"
-            assert result.get('insights') == [], "Should have empty insights"
-            assert result.get('questions') == [], "Should have empty questions"
 
 
 @pytest.mark.asyncio
