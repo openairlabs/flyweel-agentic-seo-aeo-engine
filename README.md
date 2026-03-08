@@ -1,4 +1,6 @@
-# FLYWEEL AGENTIC CONTENT ENGINE 🚀
+
+![AEO Engine Architecture Overview](assets/readme-hero.png)
+
 *Originally built by [Flyweel](https://flyweel.co) — The AI-powered ad spend & attribution platform.*
 
 An open-source, lean AI content generator producing SEO-optimized blog posts via multi-model orchestration. 
