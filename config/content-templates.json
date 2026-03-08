@@ -1,0 +1,14 @@
+{
+  "master_template": "blog-master.mdx",
+  "include_by_intent": {
+    "informational": ["faq", "evidence"],
+    "commercial": ["comparison", "faq", "evidence"],
+    "competitor": ["comparison", "reviews", "faq", "evidence"]
+  },
+  "partials": {
+    "comparison": ["partials/comparison-table.mdx"],
+    "reviews": ["partials/reviews-block.mdx"],
+    "faq": ["partials/faq.mdx"],
+    "evidence": ["partials/evidence.mdx"]
+  }
+}

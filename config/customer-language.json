@@ -1,0 +1,78 @@
+{
+  "customer_language": [
+    "sold leads",
+    "lead buyer",
+    "EPL (earnings per lead)",
+    "daily P&L",
+    "caps and stops",
+    "morning routine",
+    "reconciliation nightmare",
+    "spreadsheet hell",
+    "campaign bleeding money",
+    "cost per lead",
+    "close rate",
+    "pipeline visibility",
+    "spend to cash",
+    "working capital gap",
+    "attribution gaps"
+  ],
+  "solution_language": {
+    "visibility": [
+      "see profitability in real-time",
+      "single source of truth across all platforms",
+      "automatic matching of spend to revenue"
+    ],
+    "control": [
+      "stop-loss alerts before campaigns bleed out",
+      "caps that actually work across platforms",
+      "budget guardrails you can trust"
+    ],
+    "proof": [
+      "prove unit economics to lenders",
+      "show profitability by channel",
+      "close the loop: spend → lead → sale → cash"
+    ]
+  },
+  "industry_contexts": {
+    "lead_gen": {
+      "terms": ["sold leads", "lead buyer", "EPL", "caps", "pings", "posts"],
+      "platforms": ["LeadsPedia", "Cake", "Boberdoo", "MOJO"],
+      "pain_category": "cash flow visibility during payment delays"
+    },
+    "home_services": {
+      "terms": ["job costing", "quote to close", "service calls", "repeat customers"],
+      "platforms": ["ServiceM8", "Jobber", "Tradify", "Housecall Pro"],
+      "pain_category": "connecting ad spend to completed jobs"
+    },
+    "financial_services": {
+      "terms": ["lead cost", "settlement rate", "clawbacks", "trail commission"],
+      "platforms": ["Pipedrive", "HubSpot", "industry-specific CRMs"],
+      "pain_category": "long settlement cycles and cash flow"
+    },
+    "legal": {
+      "terms": ["intake", "retainer", "case value", "cost per signed case"],
+      "platforms": ["Clio", "PracticePanther", "custom intake systems"],
+      "pain_category": "proving marketing ROI to partners"
+    },
+    "water_filtration": {
+      "terms": ["installation booking", "site assessment", "system cost", "recurring maintenance"],
+      "platforms": ["ServiceM8", "Jobber", "Tradify"],
+      "pain_category": "tracking spend to completed installs"
+    },
+    "digital_wills": {
+      "terms": ["estate planning", "will completion rate", "subscription value", "customer LTV"],
+      "platforms": ["HubSpot", "custom platforms"],
+      "pain_category": "attributing signups back to ad source"
+    },
+    "investment_property": {
+      "terms": ["investor leads", "property settlement", "commission", "buyer qualification"],
+      "platforms": ["Pipedrive", "HubSpot", "real estate CRMs"],
+      "pain_category": "justifying high CPL with settlement commissions"
+    },
+    "high_ticket_services": {
+      "terms": ["consultation booking", "proposal value", "engagement fee", "retainer"],
+      "platforms": ["HubSpot", "Pipedrive", "Salesforce"],
+      "pain_category": "proving which channels drive signed contracts"
+    }
+  }
+}

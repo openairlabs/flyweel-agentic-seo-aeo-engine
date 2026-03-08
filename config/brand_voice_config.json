@@ -1,0 +1,105 @@
+{
+  "tone": "conversational, relatable, jargon-free",
+  "description": "Write like explaining to a friend over coffee - natural, clear, helpful",
+
+  "banned_words": [
+    "leverage",
+    "utilize",
+    "optimize",
+    "optimization",
+    "implement",
+    "implementation",
+    "methodology",
+    "comprehensive",
+    "ultimate",
+    "complete",
+    "synergy",
+    "paradigm",
+    "holistic",
+    "robust",
+    "seamless"
+  ],
+
+  "good_words": [
+    "use",
+    "make",
+    "improve",
+    "set up",
+    "setup",
+    "way",
+    "approach",
+    "simple",
+    "easy",
+    "quick",
+    "practical",
+    "helpful"
+  ],
+
+  "style_rules": [
+    "Write like explaining to a friend over coffee",
+    "Use everyday language, not industry jargon",
+    "Target Flesch Reading Ease Score 90-95+ (8th grade level)",
+    "Keep average sentence length 12-15 words maximum",
+    "Use 1-2 syllable words whenever possible",
+    "Brand mentions: adapt to mode - full (max 10, natural fit), limited (2-3, highly selective), none (educational only)",
+    "Focus 90% on user's problem, 10% on Brand as solution - avoid salesiness at all costs",
+    "Use conversational questions where appropriate",
+    "Vary sentence length for natural burstiness",
+    "Bold 2-3 key concepts per section with **bold**",
+    "Lead with direct answers in first 1-2 sentences"
+  ],
+
+  "brand_mentions": {
+    "modes": {
+      "full": {
+        "max_per_article": 10,
+        "distribution": "90% problem-focused, 10% solution-focused",
+        "approach": "natural fit, conversational, never salesy - use what feels natural (4-10 mentions)"
+      },
+      "limited": {
+        "max_per_article": 3,
+        "distribution": "95% problem-focused, 5% solution-focused",
+        "approach": "only where genuinely perfect fit, maximum restraint, quality over quantity - 2-3 total"
+      },
+      "none": {
+        "max_per_article": 0,
+        "distribution": "100% problem-focused",
+        "approach": "educational content only, no brand mentions, minimal CTA at end only"
+      }
+    },
+    "default_mode": "full"
+  },
+
+  "sentence_structure": {
+    "avoid": [
+      "Starting sentences with 'Moreover', 'Furthermore', 'Additionally'",
+      "Overusing passive voice",
+      "Long paragraphs (max 4-5 sentences)",
+      "Corporate speak and buzzwords",
+      "Em dashes (—) - use hyphens (-) or split sentences instead",
+      "Semicolons (;) - split into two sentences instead",
+      "Sentences over 20 words - break into shorter ones"
+    ],
+    "prefer": [
+      "Short, punchy sentences mixed with longer explanatory ones",
+      "Active voice: 'You can...' not 'It can be done...'",
+      "Questions that readers actually ask",
+      "Concrete examples over abstract concepts"
+    ]
+  },
+
+  "keyword_usage": {
+    "density": "1-1.5% maximum",
+    "placement": "Natural integration, avoid repetition",
+    "variants": "Use semantic variants, not exact keyword repetition"
+  },
+
+  "faq_heading_format": {
+    "style": "contextual",
+    "options": {
+      "contextual": "Your Top Questions About {keyword}",
+      "standard": "Frequently Asked Questions"
+    },
+    "description": "contextual is more engaging and SEO-friendly, standard is more scannable"
+  }
+}

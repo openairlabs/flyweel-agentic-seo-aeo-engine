@@ -1,0 +1,45 @@
+{
+  "main_competitors": [
+    "Supermetrics",
+    "Adverity", 
+    "Funnel.io",
+    "Triple Whale",
+    "Domo",
+    "Tableau",
+    "Revealbot",
+    "Northbeam",
+    "Rockerbox"
+  ],
+  "competitor_positioning": {
+    "Supermetrics": {
+      "category": "Data connector",
+      "weaknesses": ["No real-time alerts", "Limited data transformation", "Manual reporting"],
+      "target_audience": "Small marketing teams",
+      "pricing_model": "Per connector"
+    },
+    "Adverity": {
+      "category": "Enterprise data platform",
+      "weaknesses": ["Complex setup", "High cost", "Overkill for most teams"],
+      "target_audience": "Enterprise",
+      "pricing_model": "Custom enterprise"
+    },
+    "Funnel.io": {
+      "category": "Marketing data hub",
+      "weaknesses": ["No AI insights", "Manual optimization", "Limited alerting"],
+      "target_audience": "Mid-market agencies",
+      "pricing_model": "Data volume based"
+    },
+    "Domo": {
+      "category": "Business intelligence",
+      "weaknesses": ["Not marketing-specific", "Complex implementation", "Expensive"],
+      "target_audience": "Enterprise BI teams",
+      "pricing_model": "Per seat"
+    },
+    "Tableau": {
+      "category": "Data visualization",
+      "weaknesses": ["No marketing focus", "Manual data prep", "Desktop-centric"],
+      "target_audience": "Data analysts",
+      "pricing_model": "Per user"
+    }
+  }
+}

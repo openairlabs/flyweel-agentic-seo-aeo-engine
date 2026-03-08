@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Brand Blog Content Schema Snapshot",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "publishDate": { "type": "string" },
+    "author": { "type": "string" },
+    "image": { "type": ["string", "object"] },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "category": { "type": "string" },
+    "featured": { "type": "boolean" },
+    "draft": { "type": "boolean" },
+    "canonical": { "type": "string" }
+  },
+  "required": ["title", "description"]
+}

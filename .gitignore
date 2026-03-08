@@ -1,0 +1,244 @@
+# ============================================
+# SECURITY - Environment & Credentials
+# ============================================
+# Environment files
+.env
+.env.*
+!.env.example
+*.env
+.envrc
+
+# API Keys and Credentials
+credentials/
+secrets/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+service-account*.json
+*-credentials.json
+auth.json
+token.json
+
+# Configuration with sensitive data
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!config/*.json
+!n8n/workflows/*.json
+!pytest.json
+!.vscode/*.json
+
+# SSH and GPG
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+*.gpg
+
+# ============================================
+# DEPENDENCIES
+# ============================================
+# Python
+node_modules/
+.venv/
+.ven/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# JavaScript/Node
+bower_components/
+jspm_packages/
+
+# ============================================
+# DATA & OUTPUTS
+# ============================================
+# Generated content
+output/generations/*
+!output/generations/.gitkeep
+output/archive/*
+!output/archive/README.md
+
+# Data directories
+data/raw/*
+data/processed/*
+data/reports/*
+data/state/*
+!data/**/.gitkeep
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.cache
+
+# ============================================
+# DEVELOPMENT
+# ============================================
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# IDE & Editors
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# ============================================
+# TESTING & CI/CD
+# ============================================
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+.hypothesis/
+coverage/
+*.cover
+.cache
+nosetests.xml
+coverage.xml
+*.coveragerc
+
+# Test outputs
+test_output/
+test-results/
+junit.xml
+
+# ============================================
+# BUILD & DISTRIBUTION
+# ============================================
+dist/
+build/
+*.egg-info/
+.Python
+develop-eggs/
+downloads/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.manifest
+*.spec
+
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.dylib
+
+# ============================================
+# DOCUMENTATION (REMOVE PRIVATE/DEV DOCS)
+# ============================================
+# Private/internal documentation
+CRUSH.md
+Templates Provided By Friend At Screenapp/
+**/BLOG_CONTENT_PLAYBOOK (template).md
+🚀 Flyweel Blog Content Machine - NEW GUIDE.md
+PRIVATE*.md
+INTERNAL*.md
+TODO_PRIVATE.md
+
+# Development documentation (not needed in production)
+CHANGES.md
+MODEL_ARCHITECTURE.md
+MODEL_MIGRATION_SUMMARY.md
+PIPELINE.md
+QUICK_START.md
+README_COMPREHENSIVE.md
+SECURITY_IMPROVEMENTS.md
+TESTING.md
+*_NOTES.md
+*_INTERNAL.md
+ARCHITECTURE*.md
+DESIGN*.md
+
+# Keep these production docs:
+# !README.md
+# !CLAUDE.md
+# !API_KEYS_SETUP.md
+# !LICENSE
+
+# ============================================
+# CLOUD & DEPLOYMENT
+# ============================================
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# AWS
+.aws/
+
+# ============================================
+# AI & ML ARTIFACTS
+# ============================================
+# Model files (usually too large for git)
+*.h5
+*.pkl
+*.pickle
+*.joblib
+*.onnx
+*.pb
+*.pt
+*.pth
+checkpoints/
+models/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+output/generations/*
+output/archive/*
+!output/README.md

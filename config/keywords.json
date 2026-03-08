@@ -1,0 +1,74 @@
+{
+  "keyword_groups": {
+    "pain_outcome": [
+      "stop wasted ad spend software",
+      "automated ad budget control tool",
+      "multi-brand ad reporting platform",
+      "cross-channel ad spend reconciliation",
+      "attribution for long sales cycles",
+      "AI daily marketing P&L report",
+      "ad campaign stop-loss alerts",
+      "real-time ad budget pacing tool",
+      "crm integrated ad tracking",
+      "multi-currency ad spend dashboard",
+      "ads flywheel",
+      "ads ai",
+      "ads site:acme.com",
+      "ads integration",
+      "ads vsl"
+    ],
+    "jtbd_trader": [
+      "ad trading platform for marketers",
+      "campaign anomaly alerts marketing",
+      "real-time ad decision software",
+      "marketing trading desk automation",
+      "AI ad reallocation tool"
+    ],
+    "competitor_jacking": [
+      "domo alternative for marketing",
+      "revealbot vs",
+      "tribute or tributor reviews",
+      "tableau replacement for marketing teams",
+      "ad evolver alternative",
+      "mini vsl",
+      "vsl ai",
+      "vsl creator",
+      "vsl integration",
+      "vsl generator",
+      "vsl script generator",
+      "vsl tools"
+    ],
+    "high_intent_pain": [
+      "marketing data fragmentation fix",
+      "track sold vs generated leads crm",
+      "multi brand marketing attribution tool",
+      "fix meta vs ga4 attribution",
+      "agency client ad reporting automation",
+      "acme.com creator",
+      "google generator",
+      "growthloop generator",
+      "growthloop calculator",
+      "acme.com integration"
+    ]
+  },
+  "performance_targets": {
+    "ranking_targets": {
+      "week_4": 20,
+      "week_8": 10,
+      "week_12": 5,
+      "week_24": 3
+    },
+    "ctr_targets": {
+      "pain_outcome": 12.0,
+      "jtbd_trader": 8.0,
+      "competitor_jacking": 15.0,
+      "high_intent_pain": 10.0
+    },
+    "conversion_targets": {
+      "pain_outcome": 6.0,
+      "jtbd_trader": 4.0,
+      "competitor_jacking": 8.0,
+      "high_intent_pain": 7.0
+    }
+  }
+}

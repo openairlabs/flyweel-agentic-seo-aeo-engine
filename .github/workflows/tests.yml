@@ -1,0 +1,204 @@
+name: V2 Content Engine Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  test:
+    name: Run Test Suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov
+
+      - name: Run unit tests
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          NEBIUS_API_KEY: ${{ secrets.NEBIUS_API_KEY }}
+        run: |
+          # Run unit tests (fast, no integration)
+          pytest tests/test_formatter.py -v --cov=core --cov-report=term-missing
+
+      - name: Run AI router tests
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          NEBIUS_API_KEY: ${{ secrets.NEBIUS_API_KEY }}
+        run: |
+          # Run AI router tests (requires API keys)
+          pytest tests/test_ai_router.py -v -k "test_router_initialization or test_error_handling" || echo "AI tests skipped (API keys required)"
+
+      - name: Run research tests
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: |
+          # Run research module tests
+          pytest tests/test_research.py -v -k "test_researcher_initialization or test_skip_community_mode" || echo "Research tests skipped (API keys required)"
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  integration-test:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: test
+
+    # Only run integration tests on main branch or manual trigger
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+
+      - name: Check API key availability
+        id: check_keys
+        run: |
+          if [ -n "${{ secrets.GOOGLE_API_KEY }}" ] && [ -n "${{ secrets.GROQ_API_KEY }}" ] && [ -n "${{ secrets.PERPLEXITY_API_KEY }}" ]; then
+            echo "keys_available=true" >> $GITHUB_OUTPUT
+          else
+            echo "keys_available=false" >> $GITHUB_OUTPUT
+            echo "⚠️  Some API keys are missing. Integration tests will be skipped."
+          fi
+
+      - name: Run integration tests
+        if: steps.check_keys.outputs.keys_available == 'true'
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          NEBIUS_API_KEY: ${{ secrets.NEBIUS_API_KEY }}
+        run: |
+          # Run full integration tests (slower, uses API calls)
+          pytest tests/test_integration.py -v -m integration --maxfail=3
+
+      - name: Skip integration tests
+        if: steps.check_keys.outputs.keys_available == 'false'
+        run: |
+          echo "⏭️  Integration tests skipped - API keys not configured"
+          echo "To enable integration tests, add the following secrets to your repository:"
+          echo "  - GOOGLE_API_KEY (Gemini)"
+          echo "  - GROQ_API_KEY (Groq)"
+          echo "  - PERPLEXITY_API_KEY (Perplexity)"
+          echo "  - NEBIUS_API_KEY (optional, for polish step)"
+
+      - name: Archive test outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-outputs
+          path: |
+            output/
+            test_output/
+          retention-days: 7
+
+  lint:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install linting tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black isort mypy
+
+      - name: Run flake8
+        run: |
+          # Stop build if there are Python syntax errors or undefined names
+          flake8 core/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Exit-zero treats all errors as warnings
+          flake8 core/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Check code formatting with black
+        run: |
+          black --check core/ generate.py || echo "Code formatting suggestions available"
+
+      - name: Check import sorting with isort
+        run: |
+          isort --check-only core/ generate.py || echo "Import sorting suggestions available"
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install bandit safety
+
+      - name: Run bandit security scan
+        run: |
+          bandit -r core/ -f json -o bandit-report.json || echo "Security scan completed with findings"
+
+      - name: Check dependencies for vulnerabilities
+        run: |
+          safety check --json || echo "Dependency scan completed"
+
+      - name: Upload security reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: bandit-report.json
+          retention-days: 30

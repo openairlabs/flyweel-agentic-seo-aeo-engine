@@ -1,0 +1,43 @@
+{
+  "business_model_buckets": [
+    "Sales-led: ad spend → lead capture → sales → close",
+    "Pipeline-led: marketing → nurture → convert",
+    "Service: enquiry → quote → job → invoice"
+  ],
+  "tone_anchor": "Write for operators who wear multiple hats",
+  "intent_defaults": {
+    "informational": {
+      "audience": "Business professionals seeking practical knowledge",
+      "focus": "Educational, actionable insights",
+      "tone": "Expert friend explaining clearly"
+    },
+    "commercial": {
+      "audience": "Decision-makers evaluating and comparing solutions",
+      "focus": "Practical comparison with actionable insights",
+      "tone": "Expert advisor, objective but helpful"
+    },
+    "transactional": {
+      "audience": "Ready-to-buy professionals seeking the right solution",
+      "focus": "Clear value proposition and next steps",
+      "tone": "Confident, direct, solution-oriented"
+    },
+    "navigational": {
+      "audience": "Users looking for specific resources",
+      "focus": "Direct answers and clear navigation",
+      "tone": "Helpful, efficient, to the point"
+    }
+  },
+  "content_approach": {
+    "core_rules": [
+      "Focus on the problem being solved",
+      "Avoid enterprise jargon",
+      "Use conversational tone",
+      "One founder talking to another"
+    ],
+    "avoid": [
+      "Specific time/number claims without research backing",
+      "Hardcoded pain phrases",
+      "Generic marketing speak"
+    ]
+  }
+}

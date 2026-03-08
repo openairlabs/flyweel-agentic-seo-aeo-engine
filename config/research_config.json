@@ -1,0 +1,270 @@
+{
+  "_comment": "Research Content Quality Standards - 10x Improvement Plan",
+  "_version": "1.0.0",
+  "_purpose": "Centralized quality thresholds for research-style content validation",
+
+  "word_count_requirements": {
+    "min_total_words": 3500,
+    "target_total_words": 4500,
+    "max_total_words": 6000,
+    "executive_summary": {
+      "min": 200,
+      "max": 300
+    },
+    "methodology": {
+      "min": 300,
+      "max": 400,
+      "required": true
+    },
+    "case_studies_section": {
+      "min": 750,
+      "max": 1200,
+      "min_case_studies": 3,
+      "max_case_studies": 5,
+      "required": true
+    },
+    "comparative_benchmarking": {
+      "min": 400,
+      "max": 600,
+      "min_data_points": 10,
+      "required": true
+    },
+    "faq_section": {
+      "min": 300,
+      "max": 500,
+      "min_questions": 12,
+      "max_questions": 15
+    }
+  },
+
+  "data_requirements": {
+    "min_statistics": 15,
+    "target_statistics": 25,
+    "min_data_points_per_section": 3,
+    "min_case_studies": 3,
+    "target_case_studies": 5,
+    "min_sources": 10,
+    "target_sources": 15,
+    "citation_ratio_min": 0.8,
+    "_note": "80% of claims should have inline citations"
+  },
+
+  "faq_optimization": {
+    "min_questions": 12,
+    "max_questions": 15,
+    "answer_word_count": {
+      "min": 40,
+      "max": 60,
+      "ideal_min": 45,
+      "ideal_max": 55
+    },
+    "format_requirements": [
+      "Direct answer in first sentence",
+      "Supporting data in second sentence",
+      "Actionable insight in third sentence"
+    ],
+    "aeo_target": "90% AI visibility with 12-15 FAQs"
+  },
+
+  "structure_requirements": {
+    "mandatory_sections": [
+      "Executive Summary",
+      "Research Methodology",
+      "Case Studies",
+      "Comparative Benchmarking",
+      "FAQ"
+    ],
+    "h2_count": {
+      "min": 8,
+      "max": 12
+    },
+    "h3_count_per_h2": {
+      "min": 2,
+      "max": 5
+    },
+    "heading_hierarchy_strict": true,
+    "min_tables": 2,
+    "target_tables": 5
+  },
+
+  "table_quality_requirements": {
+    "min_rows": 4,
+    "min_columns": 3,
+    "require_numerical_data": true,
+    "require_ranges_not_single_values": true,
+    "right_align_numbers": true,
+    "context_aware": true,
+    "_note": "Tables should match research intent (benchmarking = company size breakdowns)"
+  },
+
+  "e_e_a_t_signals": {
+    "author_credentials_required": true,
+    "methodology_section_required": true,
+    "source_attribution_required": true,
+    "expertise_statement_required": true,
+    "date_tracking": {
+      "require_publish_date": true,
+      "require_updated_date": true,
+      "require_last_reviewed": true
+    }
+  },
+
+  "citation_requirements": {
+    "inline_citation_format": "[1], [2], [3]",
+    "min_inline_citations": 15,
+    "target_inline_citations": 25,
+    "citation_formats": [
+      "[Source Name, Year]",
+      "[1]",
+      "[2]"
+    ],
+    "require_bibliography": true,
+    "confidence_labeling": true
+  },
+
+  "data_freshness": {
+    "max_data_age_months": 18,
+    "preferred_data_age_months": 12,
+    "require_year_in_statistics": true,
+    "flag_outdated_data": true,
+    "freshness_score_min": 70
+  },
+
+  "schema_markup": {
+    "require_blog_posting": true,
+    "require_faq_page": true,
+    "faq_page_threshold": 12,
+    "require_claim_review": true,
+    "claim_review_min_confidence": "INDUSTRY",
+    "require_author_schema": true
+  },
+
+  "aeo_readiness": {
+    "target_score": 85,
+    "min_score": 70,
+    "scoring_factors": {
+      "faq_count": 25,
+      "direct_answers": 20,
+      "data_density": 15,
+      "citation_coverage": 20,
+      "schema_markup": 20
+    }
+  },
+
+  "validation_gates": {
+    "structure": {
+      "enabled": true,
+      "blocking": false,
+      "checks": [
+        "heading_hierarchy",
+        "section_word_counts",
+        "mandatory_sections"
+      ]
+    },
+    "content_quality": {
+      "enabled": true,
+      "blocking": false,
+      "checks": [
+        "min_word_count",
+        "min_statistics",
+        "min_case_studies",
+        "min_tables"
+      ]
+    },
+    "faq_optimization": {
+      "enabled": true,
+      "blocking": true,
+      "checks": [
+        "faq_count",
+        "answer_word_count",
+        "direct_answer_format"
+      ]
+    },
+    "citation_verification": {
+      "enabled": true,
+      "blocking": false,
+      "checks": [
+        "citation_ratio",
+        "source_confidence",
+        "data_freshness"
+      ]
+    },
+    "schema_generation": {
+      "enabled": true,
+      "blocking": false,
+      "checks": [
+        "blog_posting_schema",
+        "faq_page_schema",
+        "claim_review_schema"
+      ]
+    }
+  },
+
+  "research_intent_patterns": {
+    "benchmarking": {
+      "keywords": ["benchmark", "benchmarks", "industry standards", "performance metrics"],
+      "required_breakdowns": ["company_size", "industry", "geography", "maturity_level"],
+      "table_types": ["performance_metrics", "cost_analysis", "roi_comparison"],
+      "min_tables": 3
+    },
+    "market_research": {
+      "keywords": ["market size", "market analysis", "industry analysis", "adoption rate"],
+      "required_breakdowns": ["market_segment", "geography", "company_size", "growth_stage"],
+      "table_types": ["market_size", "adoption_rates", "competitive_landscape"],
+      "min_tables": 3
+    },
+    "comparison": {
+      "keywords": ["vs", "versus", "comparison", "compare", "alternative"],
+      "required_breakdowns": ["feature_set", "pricing_tier", "use_case", "company_size"],
+      "table_types": ["feature_matrix", "pricing_comparison", "best_for_segments"],
+      "min_tables": 2
+    },
+    "performance_analysis": {
+      "keywords": ["performance", "results", "outcomes", "metrics", "KPIs"],
+      "required_breakdowns": ["metric_type", "baseline", "optimized", "improvement"],
+      "table_types": ["before_after", "by_channel", "by_implementation"],
+      "min_tables": 2
+    },
+    "roi_analysis": {
+      "keywords": ["ROI", "return on investment", "cost benefit", "payback", "TCO"],
+      "required_breakdowns": ["investment_level", "payback_period", "company_size", "industry"],
+      "table_types": ["cost_benefit", "roi_by_segment", "tco_breakdown"],
+      "min_tables": 3
+    }
+  },
+
+  "premium_model_config": {
+    "serp_analysis_model": "sonar-deep-research",
+    "community_model": "compound-v2",
+    "generation_model": "gemini-2.0-flash-exp",
+    "polish_model": "Qwen3-235B-A22B-Instruct",
+    "use_premium_for_research": true,
+    "parallel_serp_queries": 7,
+    "reddit_insights_count": 15,
+    "quora_insights_count": 10,
+    "_note": "No cost constraints - use best models for maximum quality"
+  },
+
+  "readability_targets": {
+    "flesch_reading_ease_min": 60,
+    "flesch_reading_ease_target": 70,
+    "flesch_kincaid_grade_max": 10,
+    "require_toc": true,
+    "require_key_takeaways_box": true
+  },
+
+  "competitive_differentiation": {
+    "word_count_multiplier": 1.2,
+    "depth_multiplier": 1.3,
+    "aim_for_percentile": 90,
+    "_note": "Be 20% longer and 30% more comprehensive than top 3 competitors"
+  },
+
+  "output_validation": {
+    "log_validation_report": true,
+    "warn_on_failures": true,
+    "block_on_critical_failures": true,
+    "generate_validation_score": true,
+    "validation_score_min": 75
+  }
+}

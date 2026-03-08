@@ -1,0 +1,108 @@
+{
+  "_comment": "Author profiles for E-E-A-T signals in schema markup and content",
+  "_version": "1.0.0",
+  "_usage": "Maps author strings to structured E-E-A-T data for BlogPosting schema",
+  "Brand Team": {
+    "name": "Brand Team",
+    "type": "Organization",
+    "email": "hello@acme.com",
+    "url": "https://www.acme.com/about",
+    "description": "Acme's research and content team specializes in industry analytics and best practices.",
+    "expertise_areas": [
+      "Industry Analytics",
+      "Process Automation",
+      "Best Practices"
+    ],
+    "credentials": [
+      "Analyzed industry data across 200+ businesses",
+      "Published research on process frameworks",
+      "Certified team members",
+      "10+ years combined experience"
+    ],
+    "years_experience": 10,
+    "organization": {
+      "name": "Acme",
+      "url": "https://www.acme.com",
+      "logo": "https://www.acme.com/logo.png",
+      "sameAs": [
+        "https://linkedin.com/company/acme",
+        "https://twitter.com/acme"
+      ]
+    },
+    "schema": {
+      "@type": "Organization",
+      "@id": "https://www.acme.com/#organization",
+      "name": "Acme",
+      "url": "https://www.acme.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.acme.com/logo.png",
+        "width": 600,
+        "height": 60
+      },
+      "sameAs": [
+        "https://linkedin.com/company/acme",
+        "https://twitter.com/acme"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@acme.com",
+        "contactType": "Editorial"
+      }
+    }
+  },
+  "Jane Doe": {
+    "name": "Jane Doe",
+    "type": "Person",
+    "email": "jane@acme.com",
+    "url": "https://www.acme.com/about",
+    "description": "Founder of Acme and creator of the industry framework.",
+    "expertise_areas": [
+      "Industry Frameworks",
+      "Analytics",
+      "Product Development"
+    ],
+    "credentials": [
+      "Founder & CEO of Acme",
+      "15+ years in the industry"
+    ],
+    "years_experience": 15,
+    "organization": {
+      "name": "Acme",
+      "url": "https://www.acme.com"
+    },
+    "schema": {
+      "@type": "Person",
+      "@id": "https://www.acme.com/about#jane-doe",
+      "name": "Jane Doe",
+      "url": "https://www.acme.com/about",
+      "jobTitle": "Founder & CEO",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Acme",
+        "url": "https://www.acme.com"
+      },
+      "sameAs": [
+        "https://linkedin.com/in/janedoe"
+      ]
+    }
+  },
+  "_default_fallback": {
+    "name": "Brand Team",
+    "type": "Organization",
+    "email": "hello@acme.com",
+    "url": "https://www.acme.com",
+    "description": "Expert team specializing in industry analytics.",
+    "expertise_areas": [
+      "Analytics",
+      "Frameworks"
+    ],
+    "credentials": [],
+    "years_experience": 5,
+    "schema": {
+      "@type": "Organization",
+      "name": "Acme",
+      "url": "https://www.acme.com"
+    }
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "_comment": "SEO Optimization Rules - Enhanced CTR Best Practices (January 2026)",
+  "_version": "1.0.0",
+
+  "title_rules": {
+    "min_length": 30,
+    "max_length": 70,
+    "ideal_length": [50, 60],
+    "require_year": true,
+    "require_numbers_for_lists": true,
+    "banned_words": [
+      "comprehensive",
+      "ultimate",
+      "guide to",
+      "dive in",
+      "delve",
+      "leverage",
+      "utilize",
+      "optimize",
+      "synergy",
+      "paradigm",
+      "robust",
+      "cutting-edge",
+      "state-of-the-art",
+      "best-in-class",
+      "holistic",
+      "streamline"
+    ],
+    "value_indicators": [
+      "Reviewed",
+      "Free",
+      "For Beginners",
+      "Step-by-Step",
+      "Complete",
+      "Updated",
+      "Tested",
+      "Compared",
+      "Easy",
+      "Simple",
+      "Quick",
+      "Practical"
+    ],
+    "number_patterns": [
+      "^\\d+\\s+Best",
+      "^Top\\s+\\d+",
+      "^\\d+\\s+Ways",
+      "^\\d+\\s+Tips",
+      "^\\d+\\s+Tools",
+      "^\\d+\\s+Examples"
+    ],
+    "question_starters": [
+      "How to",
+      "What is",
+      "Why",
+      "When to",
+      "Which",
+      "Where to"
+    ],
+    "_note": "Use EXACT #1 keyword from GSC - do not modify it"
+  },
+
+  "meta_description_rules": {
+    "min_length": 120,
+    "max_length": 160,
+    "ideal_length": [150, 160],
+    "require_primary_keyword": true,
+    "require_keyword_in_first_50_chars": true,
+    "require_cta": true,
+    "cta_examples": [
+      "Get started free",
+      "See how",
+      "Try it now",
+      "Learn more",
+      "Compare now",
+      "Find out which",
+      "Discover why",
+      "See the top"
+    ],
+    "hooks": [
+      "Compare the best",
+      "Find out which",
+      "Discover why",
+      "See how to",
+      "Learn the secret",
+      "Stop wasting",
+      "Finally fix"
+    ]
+  },
+
+  "h2_rules": {
+    "min_count": 5,
+    "max_count": 7,
+    "max_words": 5,
+    "require_keyword_distribution": true,
+    "_note": "Top 4 keywords distributed across H2s (one each, uniquely)"
+  },
+
+  "h3_rules": {
+    "_note": "H3s use keywords ranked 5-10 from GSC data"
+  },
+
+  "h4_review_framework": {
+    "required_for_comparisons": true,
+    "sections": [
+      "Key Features",
+      "Pros",
+      "Cons",
+      "Best For",
+      "Pricing",
+      "Overall Score"
+    ],
+    "_note": "Tool name MUST be linked to official homepage"
+  },
+
+  "faq_rules": {
+    "min_questions": 12,
+    "max_questions": 15,
+    "min_answer_words": 40,
+    "max_answer_words": 60,
+    "optimal_answer_words": [45, 55],
+    "prioritize_gsc_paa": true,
+    "_note": "AEO 2026 best practice: 12-15 FAQs for 90% AI visibility. Answer length 40-60 words optimal for AI extraction (ChatGPT, Perplexity, Gemini). Use exact questions from GSC queries + PAA data."
+  },
+
+  "content_depth_rules": {
+    "min_tools_for_comparison": 12,
+    "target_tools_for_comparison": 15,
+    "_note": "If competitors have 10 tools, we have 12-15"
+  },
+
+  "external_link_rules": {
+    "new_articles": {
+      "default_rel": "nofollow",
+      "exceptions": [
+        "official_partners",
+        "academic_institutions",
+        "government_sites",
+        "research_organizations"
+      ]
+    },
+    "existing_articles": {
+      "policy": "NEVER_MODIFY",
+      "_note": "Never remove or modify existing external link attributes"
+    }
+  },
+
+  "ctr_targets": {
+    "week_4": 0.03,
+    "week_8": 0.05,
+    "week_12": 0.08,
+    "_note": "Target >8% CTR from search impressions"
+  },
+
+  "position_ctr_expectations": {
+    "1": 0.32,
+    "2": 0.17,
+    "3": 0.11,
+    "4": 0.08,
+    "5": 0.07,
+    "6": 0.05,
+    "7": 0.04,
+    "8": 0.035,
+    "9": 0.03,
+    "10": 0.025,
+    "11-20": 0.015,
+    "21+": 0.005
+  },
+
+  "intent_to_style_mapping": {
+    "informational": {
+      "patterns": ["what is", "how to", "why", "guide", "tutorial", "learn"],
+      "recommended_style": "guide",
+      "structure_priority": "what_is_section_first"
+    },
+    "commercial": {
+      "patterns": ["best", "top", "vs", "comparison", "review", "alternative"],
+      "recommended_style": "comparison",
+      "structure_priority": "comparison_table_first"
+    },
+    "transactional": {
+      "patterns": ["buy", "price", "discount", "free trial", "sign up", "get started"],
+      "recommended_style": "feature",
+      "structure_priority": "cta_heavy"
+    },
+    "navigational": {
+      "patterns": ["login", "download", "official", "site"],
+      "recommended_style": "standard",
+      "structure_priority": "direct_answer"
+    }
+  },
+
+  "content_refresh_triggers": {
+    "ranking_drop_threshold": 5,
+    "impressions_increase_threshold": 0.5,
+    "annual_refresh_months": [1, 7],
+    "_note": "Refresh when primary keyword drops below position 5"
+  },
+
+  "comparison_table_rules": {
+    "position": "after_hook",
+    "min_columns": 4,
+    "required_columns": ["Tool", "Best For", "Price", "Rating"],
+    "brand_position": 1,
+    "_note": "Quick scannable comparison immediately after opening hook"
+  },
+
+  "topical_research_config": {
+    "enabled": true,
+    "skip_for_styles": ["research"],
+    "scope_by_style": {
+      "standard": "broad",
+      "guide": "broad",
+      "comparison": "narrow",
+      "top-compare": "narrow",
+      "news": "industry",
+      "category": "broad",
+      "feature": "narrow"
+    },
+    "max_insights": 10,
+    "model": "sonar-reasoning-pro",
+    "timeout_seconds": 120,
+    "_note": "Topical Authority Agent - discovers industry insights for all modes except research"
+  },
+
+  "source_confidence_levels": {
+    "research": {
+      "indicators": [".edu", ".gov", "gartner", "forrester", "mckinsey", "harvard", "mit", "stanford", "pew", "nielsen", "statista"],
+      "label": "RESEARCH-GRADE",
+      "_note": "Peer-reviewed, academic, major research firms"
+    },
+    "industry": {
+      "indicators": ["hubspot", "salesforce", "google", "meta", "adobe", "forbes", "hbr", "techcrunch", "martech"],
+      "label": "INDUSTRY",
+      "_note": "Established publications, vendor reports"
+    },
+    "observational": {
+      "label": "OBSERVATIONAL",
+      "_note": "Community discussions, practitioner sources"
+    }
+  }
+}

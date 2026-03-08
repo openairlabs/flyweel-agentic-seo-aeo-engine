@@ -1,0 +1,36 @@
+{
+  "products": {
+    "acme-ai": {
+      "name": "Acme AI",
+      "url": "https://acme.com/ai",
+      "signup_url": "https://signup.acme.com/ai",
+      "docs_url": "https://docs.acme.com/ai/setup",
+      "tagline": "Connect AI to Your Data",
+      "description": "Acme AI is an AI server that connects your tools to your data.",
+      "what_is_mcp": "Model Context Protocol (MCP) is an open standard that enables AI assistants to securely connect to external data sources.",
+      "features": [
+        "Natural language analytics - ask questions in plain English",
+        "Works with major coding tools",
+        "Free unlimited usage - no subscription required"
+      ],
+      "use_cases": [
+        "Ask 'What's my best performing metric this week?' and get instant answers"
+      ],
+      "supported_tools": [
+        "Claude Code (CLI)",
+        "Claude Desktop",
+        "VS Code"
+      ],
+      "supported_platforms": [
+        "Platform A",
+        "Platform B"
+      ],
+      "keywords": [
+        "AI",
+        "Analytics",
+        "Integration"
+      ],
+      "positioning": "The only AI server built specifically for your data."
+    }
+  }
+}

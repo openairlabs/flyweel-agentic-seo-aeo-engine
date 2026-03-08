@@ -1,0 +1,265 @@
+{
+  "_comment": "FLEXIBLE extraction patterns for ANY industry benchmark research - NO HARDCODED VALUES",
+  "_version": "1.0.0",
+  "_note": "This config defines HOW to detect and extract metrics, not WHAT the metrics are. Metrics are discovered from research context.",
+
+  "metric_detection_patterns": {
+    "_note": "Patterns to detect which metrics are mentioned in research. Domain-constrained to Flyweel's focus: ad spend, lead gen, sales, marketing ROI.",
+
+    "acquisition_cost_metrics": {
+      "patterns": [
+        "cpl",
+        "cost per lead",
+        "cac",
+        "customer acquisition cost",
+        "cost per acquisition",
+        "cpa",
+        "cost per click",
+        "cpc",
+        "lead cost",
+        "acquisition cost"
+      ],
+      "extract_types": ["dollar_amount", "dollar_range"],
+      "description": "Metrics related to acquiring customers/leads"
+    },
+
+    "conversion_metrics": {
+      "patterns": [
+        "conversion rate",
+        "close rate",
+        "win rate",
+        "lead to customer",
+        "ctr",
+        "click through rate",
+        "click-through rate",
+        "lead conversion",
+        "sales conversion"
+      ],
+      "extract_types": ["percentage", "rate"],
+      "description": "Metrics related to converting prospects to customers"
+    },
+
+    "roi_metrics": {
+      "patterns": [
+        "roi",
+        "return on investment",
+        "return on ad spend",
+        "roas",
+        "ltv",
+        "lifetime value",
+        "customer lifetime value",
+        "clv",
+        "ltv:cac",
+        "ltv/cac",
+        "payback period",
+        "contribution margin",
+        "gross margin",
+        "net margin",
+        "profit margin"
+      ],
+      "extract_types": ["ratio", "percentage", "dollar_amount", "time_period"],
+      "description": "Metrics related to return on investment and profitability"
+    },
+
+    "pipeline_metrics": {
+      "patterns": [
+        "deal size",
+        "average deal value",
+        "contract value",
+        "revenue per customer",
+        "monthly recurring revenue",
+        "mrr",
+        "arr",
+        "annual recurring revenue",
+        "average order value",
+        "aov"
+      ],
+      "extract_types": ["dollar_amount", "dollar_range"],
+      "description": "Metrics related to deal/customer value"
+    },
+
+    "volume_metrics": {
+      "patterns": [
+        "leads",
+        "lead volume",
+        "customers",
+        "signups",
+        "inquiries",
+        "applications",
+        "qualified leads",
+        "mql",
+        "sql",
+        "sales qualified",
+        "marketing qualified"
+      ],
+      "extract_types": ["count", "count_per_period"],
+      "description": "Metrics related to volume of leads/customers"
+    },
+
+    "time_metrics": {
+      "patterns": [
+        "time to close",
+        "sales cycle",
+        "lead response time",
+        "time to value",
+        "implementation time",
+        "onboarding time"
+      ],
+      "extract_types": ["time_period"],
+      "description": "Metrics related to time/speed"
+    }
+  },
+
+  "industry_segmentation_patterns": {
+    "_note": "HOW to segment data (not WHAT industries exist). Industries are discovered from icp_config.json + research context.",
+
+    "primary_dimensions": [
+      "company_size",
+      "industry_vertical",
+      "geography",
+      "maturity_level",
+      "use_case",
+      "pricing_tier"
+    ],
+
+    "dimension_detection": {
+      "company_size": {
+        "keywords": [
+          "smb",
+          "small business",
+          "small-medium",
+          "mid-market",
+          "middle market",
+          "enterprise",
+          "large enterprise",
+          "startup",
+          "scale-up",
+          "1-50",
+          "50-500",
+          "500+",
+          "< 50 employees",
+          "100-1000 employees",
+          "fortune"
+        ],
+        "extract_segments_from": "research_context",
+        "default_segments": ["SMB", "Mid-Market", "Enterprise"]
+      },
+
+      "industry_vertical": {
+        "keywords": [
+          "industry",
+          "vertical",
+          "sector",
+          "market"
+        ],
+        "extract_segments_from": "icp_config + research_context",
+        "note": "Industries loaded from icp_config.json, then filtered by keyword/research relevance"
+      },
+
+      "geography": {
+        "keywords": [
+          "region",
+          "country",
+          "market",
+          "north america",
+          "us",
+          "usa",
+          "canada",
+          "europe",
+          "eu",
+          "emea",
+          "uk",
+          "apac",
+          "asia pacific",
+          "australia",
+          "singapore"
+        ],
+        "extract_segments_from": "research_context",
+        "default_segments": ["North America", "Europe", "APAC"]
+      },
+
+      "maturity_level": {
+        "keywords": [
+          "beginner",
+          "basic",
+          "intermediate",
+          "advanced",
+          "enterprise-grade",
+          "best-in-class"
+        ],
+        "extract_segments_from": "research_context",
+        "default_segments": ["Basic", "Intermediate", "Advanced", "Best-in-Class"]
+      },
+
+      "use_case": {
+        "keywords": [
+          "use case",
+          "application",
+          "scenario",
+          "purpose"
+        ],
+        "extract_segments_from": "research_context"
+      },
+
+      "pricing_tier": {
+        "keywords": [
+          "pricing",
+          "tier",
+          "plan",
+          "package"
+        ],
+        "extract_segments_from": "research_context",
+        "default_segments": ["Entry", "Professional", "Enterprise"]
+      }
+    }
+  },
+
+  "data_structure_templates": {
+    "_note": "Templates for how to structure extracted data - NO hardcoded values, only structure definitions",
+
+    "benchmark_table": {
+      "structure": "industry_segment × metric_type × statistical_range",
+      "statistical_range": ["min", "median", "max", "top_quartile"],
+      "source_attribution": "REQUIRED",
+      "min_rows": 3,
+      "min_columns": 3,
+      "note": "Use ranges not single values"
+    },
+
+    "roi_table": {
+      "structure": "segment × investment_metric × return_metric × ratio",
+      "calculation": "return_metric / investment_metric",
+      "time_dimension": "include if present in research",
+      "min_rows": 3,
+      "min_columns": 4,
+      "note": "Show investment, return, and ROI percentage"
+    },
+
+    "comparison_table": {
+      "structure": "option × feature/metric × value/rating",
+      "ranking": "optional based on research intent",
+      "min_rows": 3,
+      "min_columns": 3,
+      "note": "Compare options across multiple dimensions"
+    }
+  },
+
+  "extraction_instructions": {
+    "_note": "General guidelines for extracting metrics from research",
+
+    "data_format_rules": {
+      "use_ranges": "Always use ranges ($50-$150) not single values ($100)",
+      "include_source": "Every data point MUST cite source [Source, Year]",
+      "statistical_distribution": "Include min, median, max, top quartile where available",
+      "unavailable_data": "Use 'Data unavailable' not fabricated numbers",
+      "sample_size": "Include sample size or confidence level if mentioned"
+    },
+
+    "quality_gates": {
+      "min_data_points_per_table": 12,
+      "min_sources_per_table": 2,
+      "data_freshness_months": 12,
+      "range_requirement": "80% of numerical data must be ranges"
+    }
+  }
+}

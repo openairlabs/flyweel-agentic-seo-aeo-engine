@@ -1,0 +1,72 @@
+{
+  "primary_icps": {
+    "lead_sellers": {
+      "description": "Performance marketers who buy traffic, capture leads, and sell them to buyers",
+      "business_model": "Ad spend → capture lead → sell lead → get paid 30-60 days later",
+      "typical_roles": ["founder-operator", "media buyer", "performance marketer"],
+      "tech_stack": {
+        "ad_platforms": ["Meta", "Google", "TikTok", "native networks"],
+        "lead_distribution": ["LeadsPedia", "Cake", "custom systems"],
+        "crm": ["Pipedrive", "Airtable", "custom builds"],
+        "accounting": ["Xero", "spreadsheets", "nothing formal"],
+        "payments": ["AMEX", "Airwallex", "bank cards", "multiple credit lines"]
+      },
+      "pain_categories": [
+        "visibility into real-time profitability",
+        "data silos across ad, revenue, and accounting systems",
+        "cash flow gaps between spend and payment",
+        "proving unit economics to investors or lenders"
+      ],
+      "language_they_use": [
+        "sold leads", "lead buyer", "EPL", "daily P&L", "caps", "stops",
+        "campaign bleeding money", "morning routine", "reconciliation nightmare"
+      ]
+    },
+    "sales_led_services": {
+      "description": "Service businesses with ad-driven sales pipelines and 60-90 day cash cycles",
+      "business_model": "Ad spend → enquiry → sales qualification → job delivery → payment 60-90 days later",
+      "typical_roles": ["business owner", "marketing manager", "sales team", "ops manager", "finance controller"],
+      "tech_stack": {
+        "ad_platforms": ["Meta", "Google", "LSAs", "local directories"],
+        "crm_job_management": ["Pipedrive", "HubSpot", "ServiceM8", "Jobber", "Tradify"],
+        "accounting": ["Xero", "MYOB", "QuickBooks"],
+        "payments": ["bank transfers", "AMEX", "Stripe for deposits"]
+      },
+      "industries": {
+        "home_services": ["solar installers", "HVAC contractors", "roofers", "pool builders", "pool service", "water filtration installers", "plumbers", "electricians", "landscaping companies", "lawn care", "tree services", "garage door installers", "pest control", "junk removal", "moving companies", "security systems installers", "home automation", "fencing contractors", "deck builders", "patio installers", "concrete contractors", "driveway pavers", "flooring installers", "septic services", "water damage restoration", "mold remediation", "foundation repair"],
+        "construction": ["home builders", "custom home builders", "renovation contractors", "kitchen remodelers", "bathroom remodelers", "general contractors", "commercial construction", "industrial construction", "roofing contractors", "siding contractors", "window replacement", "door installation", "basement finishing", "attic conversion", "home additions", "ADU builders", "tiny home builders", "modular home builders", "commercial roofing", "industrial roofing"],
+        "financial_services": ["mortgage brokers", "mortgage lenders", "reverse mortgage brokers", "refinance brokers", "FHA lenders", "VA lenders", "USDA lenders", "jumbo mortgage lenders", "business lenders", "commercial lenders", "equipment finance brokers", "equipment leasing", "asset-based lending", "lines of credit providers", "working capital lenders", "merchant cash advance", "revenue-based financing", "inventory financing", "purchase order financing", "insurance brokers", "life insurance agents", "health insurance brokers", "commercial insurance brokers", "P&C insurance", "workers comp insurance", "disability insurance", "long-term care insurance", "annuity brokers", "surety bond brokers", "financial advisors", "wealth managers", "investment advisors", "financial planners", "retirement planners", "estate planning advisors", "tax planners", "accountants", "tax preparers", "bookkeepers", "CFO services", "controller services", "payroll services", "merchant services", "payment processors", "credit card processing", "ACH processing", "point of sale systems", "factoring companies", "invoice financing", "accounts receivable financing", "business credit advisors", "credit repair", "debt consolidation", "debt settlement", "SBA lenders", "SBA 7(a) lenders", "SBA 504 lenders", "hard money lenders", "private lenders", "bridge lenders", "fix and flip lenders", "construction loans", "crowdfunding platforms", "peer-to-peer lending", "digital wills providers", "probate services", "trust services", "401k advisors", "pension advisors", "franchise financing", "dental practice financing", "medical practice financing", "veterinary practice financing", "legal practice financing"],
+        "legal": ["personal injury lawyers", "car accident lawyers", "truck accident lawyers", "motorcycle accident lawyers", "slip and fall lawyers", "medical malpractice lawyers", "workers compensation lawyers", "family law attorneys", "divorce lawyers", "child custody lawyers", "immigration lawyers", "criminal defense attorneys", "DUI lawyers", "drug crime lawyers", "white collar crime lawyers", "commercial litigation", "business litigation", "employment lawyers", "labor law attorneys", "estate planning attorneys", "probate lawyers", "bankruptcy lawyers", "tax attorneys", "real estate attorneys", "intellectual property lawyers", "patent attorneys", "trademark lawyers", "civil rights lawyers", "class action lawyers", "mass tort lawyers"],
+        "healthcare": ["dental clinics", "dentists", "orthodontists", "cosmetic dentistry", "pediatric dentists", "oral surgeons", "cosmetic surgery", "plastic surgeons", "fertility clinics", "IVF clinics", "chiropractors", "physical therapists", "acupuncture clinics", "naturopaths", "functional medicine", "urgent care clinics", "medical spas", "dermatology clinics", "laser hair removal", "weight loss clinics", "bariatric surgery", "vision centers", "optometrists", "ophthalmologists", "LASIK surgery", "hearing clinics", "audiology", "mental health clinics", "therapy practices", "addiction treatment centers", "rehab centers", "veterinary clinics", "animal hospitals"],
+        "real_estate": ["buyers agents", "listing agents", "commercial real estate brokers", "investment property specialists", "property managers", "vacation rental managers", "real estate investors", "house flippers", "wholesalers", "title companies", "escrow services", "real estate appraisers", "home inspectors", "real estate photographers", "staging companies", "1031 exchange facilitators"],
+        "b2b_tech": ["enterprise SaaS", "SMB SaaS", "fintech platforms", "martech platforms", "HR tech", "IT consulting firms", "management consulting", "strategy consulting", "web design agencies", "app development", "software development", "custom software", "MSPs", "managed IT services", "cybersecurity firms", "cloud services", "data analytics", "business intelligence", "CRM platforms", "ERP systems", "AI/ML platforms"],
+        "high_ticket_services": ["executive coaching", "business coaching", "management consulting", "strategy consulting", "wealth management", "private banking", "family office", "luxury concierge", "yacht brokers", "private aviation", "M&A advisory", "investment banking", "private equity", "venture capital"],
+        "education_services": ["online course creators", "coaching programs", "masterminds", "training companies", "certification programs", "corporate training", "skills training", "test prep companies", "college consulting", "career coaching", "business schools", "bootcamps", "coding bootcamps"],
+        "automotive_sales": ["car dealerships", "used car dealers", "RV dealers", "boat dealers", "motorcycle dealers", "powersports dealers", "commercial vehicle dealers", "fleet sales"],
+        "professional_services": ["architects", "civil engineers", "structural engineers", "MEP engineers", "surveyors", "interior designers", "landscape architects", "urban planners", "environmental consultants", "construction managers", "project managers", "event planners", "wedding planners", "photography studios", "video production companies"],
+        "lead_generation": ["pay-per-lead companies", "PPL providers", "lead aggregators", "lead buyers", "lead sellers", "affiliate marketers", "performance marketers", "media buyers", "lead distribution networks", "call centers", "contact centers", "telemarketing companies", "appointment setting services", "lead nurturing services", "lead qualification services", "BDR services", "SDR services", "demand generation agencies"]
+      },
+      "pain_categories": [
+        "disconnected teams with fragmented metrics",
+        "no closed-loop attribution from spend to revenue",
+        "reconciliation burden across departments",
+        "cash flow gaps during service delivery cycles"
+      ],
+      "language_they_use": [
+        "cost per lead", "lead quality", "close rate", "job costing", "pipeline",
+        "bad leads", "attribution", "ROAS", "spend to cash", "working capital"
+      ]
+    }
+  },
+  "pain_categories_only": {
+    "visibility": "Lack of real-time profitability visibility",
+    "silos": "Data fragmentation across systems",
+    "proof": "Inability to prove profitability to stakeholders",
+    "blame": "Attribution conflicts between teams"
+  },
+  "content_framing": {
+    "speak_to": "Operators who wear multiple hats and don't have time for complex solutions",
+    "avoid": "Enterprise jargon, IT-speak, lengthy implementation discussions",
+    "tone": "One founder talking to another - we've been there, we get it"
+  }
+}
