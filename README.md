@@ -8,6 +8,15 @@
 An open-source, lean AI content generator producing SEO-optimized blog posts via multi-model orchestration. 
 Interactive CLI tool with Rich prompts, GSC-driven SEO optimization, and direct publishing capabilities.
 
+👋 **A note from Reuben, CEO & Founder of Flyweel:**
+
+I'm a performance marketer by trade, not a software engineer. I built this initial release of our Agentic Content Engine for our own organic growth and it took us from almost zero to **9,000 search impressions in just 60-90 days**. Because I am largely non-technical (our engineering team has only done a light review of this specific codebase), it might not be perfect. If you spot any issues, please feel free to let us know, open a PR to contribute, or start a Discussion! 
+
+We are currently working on a massive upgraded version of this engine, but it isn't quite stable yet. **If you'd like us to open-source the V2 when it's ready, let us know by leaving a ⭐ Star on this repo!**
+
+P.S. Want to see what else we're building? 
+[Click here to try Flyweel and join our platform!](https://flyweel.co)*
+
 ## 🛠 Getting Started for Your Brand
 
 To use this engine for your own company, follow these steps to customize the brand identity:
