@@ -1,7 +1,9 @@
 
 ![AEO Engine Architecture Overview](assets/readme-hero.png)
 
-*Originally built by [Flyweel](https://flyweel.co) — The AI-powered ad spend & attribution platform.*
+*Originally built by [Flyweel](https://flyweel.co)*
+
+**We're building the layer connecting spend, revenue, and capital with agentic finance.**
 
 An open-source, lean AI content generator producing SEO-optimized blog posts via multi-model orchestration. 
 Interactive CLI tool with Rich prompts, GSC-driven SEO optimization, and direct publishing capabilities.
