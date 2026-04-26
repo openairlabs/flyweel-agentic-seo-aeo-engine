@@ -1,6 +1,6 @@
 
 ![AEO Engine Architecture Overview](assets/readme-hero.png)
-
+![Release](https://www.shieldcn.dev/github/release/openairlabs/flyweel-agentic-seo-aeo-engine.svg?size=sm&labelColor=baf1d6&color=284a39&labelTextColor=112320&valueColor=112320&logoColor=162018)
 *Originally built by [Flyweel](https://flyweel.co)*
 
 **We're building the layer connecting spend, revenue, and capital with agentic finance.**
