@@ -1,7 +1,7 @@
 
 ![AEO Engine Architecture Overview](assets/readme-hero.png)
 ![Release](https://www.shieldcn.dev/github/release/openairlabs/flyweel-agentic-seo-aeo-engine.svg?size=sm&labelColor=baf1d6&color=284a39&labelTextColor=112320&valueColor=112320&logoColor=162018)
-
+V2.0 coming soon!
 
 *Originally built by [Flyweel](https://flyweel.co)*
 
