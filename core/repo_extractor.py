@@ -26,7 +26,7 @@ class RepoContextExtractor:
 
     # Default paths
     ASTRO_REPO_PATH = Path(os.getenv("ASTRO_SITE_PATH", "../my-astro-site")) / "src"
-    CACHE_PATH = Path("/tmp/brand_repo_context_cache.json")
+    CACHE_PATH = Path.home() / ".cache" / "flyweel-content-engine" / "brand_repo_context_cache.json"
 
     def __init__(self, repo_path: Optional[Path] = None):
         """Initialize with optional custom repo path
@@ -552,6 +552,7 @@ class RepoContextExtractor:
     def _save_cache(self, context: Dict[str, Any]) -> None:
         """Save context to cache file"""
         try:
+            self.CACHE_PATH.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
             self.CACHE_PATH.write_text(
                 json.dumps(context, indent=2, default=str),
                 encoding='utf-8'

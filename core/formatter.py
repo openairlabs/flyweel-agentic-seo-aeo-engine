@@ -1,4 +1,5 @@
 """Astro Formatter - Complete Astro blog compatibility with all features"""
+import html
 import re
 import json
 import logging
@@ -7,9 +8,15 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 import os
 
-# Schema generation and validation
+# Schema generation, fact checking, and fail-closed MDX security
 from core.schema_generator import SchemaGenerator
 from core.fact_checker import FactChecker
+from core.mdx_security import (
+    MdxSecurityError,
+    assert_safe_mdx,
+    escape_markdown_link_text,
+    sanitize_content_url,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -1629,15 +1636,22 @@ Ready to stop wasting budget on guesswork? See how Brand connects your CRM to ad
             references += "> This article cites the following authoritative sources:\n\n"
 
             # Build numbered reference list with descriptive titles and anchor IDs
-            for i, citation in enumerate(used_citations, 1):
+            ref_idx = 0
+            for citation in used_citations:
+                try:
+                    safe_url = sanitize_content_url(str(citation.get("url", "")))
+                except MdxSecurityError:
+                    logger.warning("Skipping citation with unsafe URL")
+                    continue
+                ref_idx += 1
                 # Extract descriptive title for E-E-A-T
-                title = self._extract_source_title(citation)
+                title = escape_markdown_link_text(self._extract_source_title(citation))
 
                 # Get source type for credibility signals
                 source_type = self._get_source_type(citation)
 
                 # Build reference entry with anchor ID: <span id="cite-1">[1]</span> [Title](URL) - Type
-                references += f'<span id="cite-{i}">[{i}]</span> [{title}]({citation["url"]}) - {source_type}\n'
+                references += f'<span id="cite-{ref_idx}">[{ref_idx}]</span> [{title}]({safe_url}) - {source_type}\n'
 
             references += '\n</CitationsSection>\n'
             content += references
@@ -1894,10 +1908,15 @@ Ready to stop wasting budget on guesswork? See how Brand connects your CRM to ad
                 if domain in url:
                     return match.group(0)  # Keep original
 
+            try:
+                safe_url = sanitize_content_url(url)
+            except MdxSecurityError:
+                return html.escape(text, quote=True)
+
             # For all other external links, we note they should have nofollow
             # In Astro MDX, we use HTML anchor tags for nofollow
-            # Return as HTML: <a href="url" target="_blank" rel="nofollow">text</a>
-            return f'<a href="{url}" target="_blank" rel="nofollow">{text}</a>'
+            safe_text = html.escape(text, quote=True)
+            return f'<a href="{safe_url}" target="_blank" rel="noopener noreferrer nofollow">{safe_text}</a>'
 
         # Process external links
         processed = re.sub(link_pattern, add_nofollow, content)
@@ -2132,8 +2151,11 @@ Ready to stop wasting budget on guesswork? See how Brand connects your CRM to ad
             base_imports.append("import { SolutionCard, ComparisonSummary, ServicesList, MetadataBadges } from '@/components/mdx';")
 
         # Escape quotes in frontmatter strings
-        title_escaped = frontmatter['title'].replace("'", "''")
-        desc_escaped = frontmatter['description'].replace("'", "''")
+        title_escaped = str(frontmatter['title']).replace("'", "''")
+        desc_escaped = str(frontmatter['description']).replace("'", "''")
+        author_escaped = str(frontmatter['author']).replace("'", "''")
+        category_escaped = str(frontmatter['category']).replace("'", "''")
+        keyword_escaped = str(keyword).replace("'", "''")
         seo_title = title_escaped[:60] if len(title_escaped) > 60 else title_escaped
 
         # Generate JSON-LD schema markup (BlogPosting + FAQPage + ClaimReview)
@@ -2150,10 +2172,10 @@ Ready to stop wasting budget on guesswork? See how Brand connects your CRM to ad
             f"title: '{title_escaped}'",
             f"publishDate: '{frontmatter['publishDate']}'",
             f"description: '{desc_escaped}'",
-            f"author: '{frontmatter['author']}'",
+            f"author: '{author_escaped}'",
             f"image: {json.dumps(frontmatter['image'])}",
             f"tags: {json.dumps(frontmatter['tags'])}",
-            f"category: '{frontmatter['category']}'",
+            f"category: '{category_escaped}'",
             f"categories: {json.dumps([frontmatter['category']])}",
             "featured: false",
             "draft: true",
@@ -2162,7 +2184,7 @@ Ready to stop wasting budget on guesswork? See how Brand connects your CRM to ad
             "seo:",
             f"  title: '{seo_title}'",
             f"  description: '{desc_escaped}'",
-            f"  focusKeyword: '{keyword}'",
+            f"  focusKeyword: '{keyword_escaped}'",
             "  schemaType: 'Article'",
             f"  jsonld: '{schema_json.replace(chr(39), chr(39) + chr(39))}'",  # Escape single quotes
         ]
@@ -2185,7 +2207,7 @@ Ready to stop wasting budget on guesswork? See how Brand connects your CRM to ad
             ""
         ])
 
-        return "\n".join(mdx_parts)
+        return assert_safe_mdx("\n".join(mdx_parts))
     
     def _extract_howto_steps(self, content: str) -> List[Dict[str, Any]]:
         """Extract HowTo steps from guide content"""

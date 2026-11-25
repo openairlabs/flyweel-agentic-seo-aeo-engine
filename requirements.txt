@@ -3,7 +3,8 @@ google-genai>=1.63.0      # Gemini for generation + grounded search
 google-auth>=2.23.0       # Google API authentication
 google-api-python-client>=2.108.0  # Google Search Console
 openai>=1.12.0            # OpenAI-compatible API (Nebius)
-aiohttp==3.10.5           # Async HTTP
+aiohttp>=3.14.5,<4        # Async HTTP (patched against 3.10.x-3.14.4 CVEs)
+defusedxml>=0.7.1,<1      # Safe XML parsing for sitemaps
 python-dotenv==1.0.1      # Environment vars
 beautifulsoup4==4.12.3    # HTML parsing
 pydantic>=2.9.0           # Data validation (google-genai requires >=2.9)
