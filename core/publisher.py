@@ -10,6 +10,8 @@ from typing import Dict, Any, Optional, List
 from datetime import datetime
 import logging
 
+from core.mdx_security import assert_safe_mdx
+
 logger = logging.getLogger(__name__)
 
 
@@ -120,6 +122,9 @@ class AstroPublisher:
                     logger.warning(f"⚠️  Import missing semicolon: {line[:50]}")
                     content = content.replace(line, line.rstrip() + ';')
 
+            # Fail-closed MDX security check before writing into site repository
+            assert_safe_mdx(content)
+
             # Write MDX file
             target_path.write_text(content, encoding='utf-8')
 
@@ -216,7 +221,7 @@ class AstroPublisher:
             if last_hyphen > 40:
                 slug = slug[:last_hyphen]
 
-        return slug
+        return slug or "untitled"
 
     def _ensure_draft_status(self, content: str, draft: bool) -> str:
         """Ensure draft frontmatter field is set correctly

@@ -11,17 +11,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from core.research import WebResearcher, CommunityResearcher
+from tests.conftest import skip_if_no_api_keys
 
 
 @pytest.mark.asyncio
 class TestWebResearcher:
     """Test web research and SERP analysis"""
 
+    @skip_if_no_api_keys
     async def test_researcher_initialization(self):
         """Test WebResearcher initializes correctly"""
         async with WebResearcher() as researcher:
             assert researcher.perplexity_key is not None, "Should have Perplexity key"
 
+    @skip_if_no_api_keys
     async def test_serp_analysis_standard(self):
         """Test standard SERP analysis with sonar-reasoning-pro"""
         async with WebResearcher() as researcher:
@@ -37,6 +40,7 @@ class TestWebResearcher:
             if analysis:
                 assert len(str(analysis)) > 100, "Analysis should be substantial"
 
+    @skip_if_no_api_keys
     async def test_serp_analysis_research(self):
         """Test deep research SERP analysis with sonar-deep-research"""
         async with WebResearcher() as researcher:
@@ -50,6 +54,7 @@ class TestWebResearcher:
             if analysis:
                 assert len(str(analysis)) > 200, "Research analysis should be more detailed"
 
+    @skip_if_no_api_keys
     async def test_paa_extraction(self):
         """Test PAA (People Also Ask) question extraction"""
         async with WebResearcher() as researcher:
@@ -62,6 +67,7 @@ class TestWebResearcher:
                 assert len(paa_questions) > 0, "Should extract PAA questions"
                 assert all(isinstance(q, str) for q in paa_questions), "Questions should be strings"
 
+    @skip_if_no_api_keys
     async def test_citation_extraction(self):
         """Test citation extraction from SERP analysis"""
         async with WebResearcher() as researcher:
@@ -72,6 +78,7 @@ class TestWebResearcher:
                 citations = serp_analysis.get('citations', [])
                 assert isinstance(citations, list), "Citations should be a list"
 
+    @skip_if_no_api_keys
     async def test_platform_filtering(self):
         """Test platform name filtering in PAA questions"""
         async with WebResearcher() as researcher:

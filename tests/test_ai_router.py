@@ -13,12 +13,14 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from core.ai_router import SmartAIRouter
+from tests.conftest import skip_if_no_api_keys
 
 
 @pytest.mark.asyncio
 class TestSmartAIRouter:
     """Test AI router initialization and model selection"""
 
+    @skip_if_no_api_keys
     async def test_router_initialization(self):
         """Test that router initializes with API keys"""
         async with SmartAIRouter() as router:
@@ -37,6 +39,7 @@ class TestSmartAIRouter:
             assert len(content) > 100, "Research content should be substantial"
             assert 'citations' in result.get('choices', [{}])[0].get('message', {}), "Should include citations"
 
+    @skip_if_no_api_keys
     async def test_groq_extraction(self):
         """Test Groq extraction capabilities"""
         async with SmartAIRouter() as router:
@@ -53,6 +56,7 @@ class TestSmartAIRouter:
             assert result is not None, "Extraction should return result"
             assert len(result) > 50, "Extraction should have meaningful content"
 
+    @skip_if_no_api_keys
     async def test_gemini_generation(self):
         """Test Gemini content generation"""
         async with SmartAIRouter() as router:
@@ -69,6 +73,7 @@ class TestSmartAIRouter:
             assert 'lead' in result.lower(), "Content should mention the topic"
             assert 'attribution' in result.lower(), "Content should be relevant"
 
+    @skip_if_no_api_keys
     async def test_custom_prompt_detection(self):
         """Test smart prompt detection for custom vs keyword prompts"""
         async with SmartAIRouter() as router:
@@ -89,6 +94,7 @@ class TestSmartAIRouter:
             assert result is not None, "Custom prompt should generate content"
             assert len(result) > 200, "Should generate substantial content"
 
+    @skip_if_no_api_keys
     async def test_multipart_generation(self):
         """Test multi-part generation for long content"""
         async with SmartAIRouter() as router:
@@ -167,6 +173,7 @@ class TestSmartAIRouter:
 class TestPromptConstruction:
     """Test prompt building and template logic"""
 
+    @skip_if_no_api_keys
     async def test_paa_section_formatting(self):
         """Test PAA question formatting in prompts"""
         async with SmartAIRouter() as router:

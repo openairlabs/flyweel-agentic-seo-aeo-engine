@@ -621,10 +621,17 @@ async def _save_local(
     """
     from datetime import datetime
     import json
+    import re
+    from core.mdx_security import assert_safe_mdx
 
-    slug = result.get('slug', 'untitled')
+    raw_slug = str(result.get('slug', 'untitled') or 'untitled')
+    slug = re.sub(r'[^a-z0-9]+', '-', raw_slug.lower()).strip('-') or 'untitled'
     content = result.get('content', '')
     raw_content = result.get('raw_content', '')
+
+    # Fail-closed MDX security validation before saving final.mdx
+    if content:
+        assert_safe_mdx(content)
 
     # Create output directory
     date_str = datetime.now().strftime('%Y-%m-%d')

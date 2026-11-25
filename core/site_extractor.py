@@ -9,8 +9,10 @@ import os
 import re
 import logging
 from urllib.parse import urljoin, urlparse
-import xml.etree.ElementTree as ET
+from pathlib import Path
+import defusedxml.ElementTree as ET
 from openai import AsyncOpenAI
+from core.url_safety import UnsafeUrlError, safe_fetch_url_text, validate_public_http_url
 
 # Set up verbose logging
 logging.basicConfig(
@@ -32,9 +34,10 @@ class SiteContextExtractor:
         self.base_url = os.getenv('GSC_SITE_URL', 'https://yourdomain.com')
         self.sitemap_url = f'{self.base_url}/sitemap-0.xml'
         
-        # Cache management
+        # Cache management (user-scoped directory instead of world-writable /tmp)
         self._context_cache = None
-        self._cache_file = '/tmp/brand_context_cache.json'
+        cache_dir = Path.home() / ".cache" / "flyweel-content-engine"
+        self._cache_file = str(cache_dir / "brand_context_cache.json")
         self._cache_duration = timedelta(hours=24)
         
         self.session = None
@@ -116,7 +119,9 @@ class SiteContextExtractor:
             # Cache the results
             self._context_cache = context
             try:
-                with open(self._cache_file, 'w') as f:
+                cache_path = Path(self._cache_file)
+                cache_path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+                with open(cache_path, 'w') as f:
                     json.dump(context, f, indent=2)
                 logger.info(f"💾 Cached context to {self._cache_file}")
             except Exception as e:
@@ -129,38 +134,56 @@ class SiteContextExtractor:
             logger.error(f"❌ Error during context extraction: {e}")
             return self._get_fallback_context()
     
+    def _is_same_target_host(self, candidate_url: str) -> bool:
+        """Allow only public http(s) URLs belonging to the configured target host."""
+        if not candidate_url or not isinstance(candidate_url, str):
+            return False
+        try:
+            normalized = validate_public_http_url(candidate_url, resolve_dns=False)
+        except UnsafeUrlError:
+            return False
+        base_host = (urlparse(self.base_url).hostname or "").lower().removeprefix("www.")
+        cand_host = (urlparse(normalized).hostname or "").lower().removeprefix("www.")
+        return bool(base_host) and cand_host == base_host
+
     async def _crawl_sitemap(self) -> List[str]:
         """Crawl sitemap.xml to get all URLs"""
         urls = []
         
         try:
-            # First try the main sitemap
-            async with self.session.get(self.sitemap_url) as resp:
-                if resp.status == 200:
-                    content = await resp.text()
-                    
-                    # Parse XML
-                    root = ET.fromstring(content)
-                    
-                    # Handle both regular sitemaps and sitemap indexes
-                    namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
-                    
-                    # Check if it's a sitemap index
-                    sitemap_urls = root.findall('.//ns:sitemap/ns:loc', namespace)
-                    if sitemap_urls:
-                        logger.info(f"📑 Found sitemap index with {len(sitemap_urls)} sitemaps")
-                        # Crawl each sub-sitemap
-                        for sitemap in sitemap_urls:
-                            sub_urls = await self._crawl_single_sitemap(sitemap.text)
-                            urls.extend(sub_urls)
-                    else:
-                        # Regular sitemap
-                        url_elements = root.findall('.//ns:url/ns:loc', namespace)
-                        urls = [url.text for url in url_elements]
-                        
-                    logger.info(f"🔍 Extracted {len(urls)} URLs from sitemap")
-                else:
-                    logger.warning(f"⚠️  Sitemap returned status {resp.status}")
+            # First try the main sitemap (SSRF-validated fetch + defusedxml parsing)
+            if not self._is_same_target_host(self.sitemap_url):
+                raise UnsafeUrlError(f"Sitemap URL rejected: {self.sitemap_url}")
+            _, _, content = await safe_fetch_url_text(self.session, self.sitemap_url, timeout_seconds=12.0)
+
+            # Parse XML safely via defusedxml
+            root = ET.fromstring(content)
+
+            # Handle both regular sitemaps and sitemap indexes
+            namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+
+            # Check if it's a sitemap index
+            sitemap_urls = root.findall('.//ns:sitemap/ns:loc', namespace)
+            if sitemap_urls:
+                logger.info(f"📑 Found sitemap index with {len(sitemap_urls)} sitemaps")
+                # Crawl each sub-sitemap (same-host only)
+                for sitemap in sitemap_urls:
+                    loc = (sitemap.text or "").strip()
+                    if not self._is_same_target_host(loc):
+                        logger.warning(f"⚠️  Skipping untrusted sub-sitemap URL: {loc}")
+                        continue
+                    sub_urls = await self._crawl_single_sitemap(loc)
+                    urls.extend(sub_urls)
+            else:
+                # Regular sitemap
+                url_elements = root.findall('.//ns:url/ns:loc', namespace)
+                urls = [
+                    (url.text or "").strip()
+                    for url in url_elements
+                    if self._is_same_target_host((url.text or "").strip())
+                ]
+
+            logger.info(f"🔍 Extracted {len(urls)} URLs from sitemap")
                     
         except Exception as e:
             logger.error(f"❌ Error crawling sitemap: {e}")
@@ -183,7 +206,7 @@ class SiteContextExtractor:
         skip_patterns = ['privacy', 'terms', 'legal', 'cookie', '.pdf', '.xml']
         
         for url in urls:
-            if not any(pattern in url.lower() for pattern in skip_patterns):
+            if self._is_same_target_host(url) and not any(pattern in url.lower() for pattern in skip_patterns):
                 important_urls.append(url)
                 
         logger.info(f"📌 Filtered to {len(important_urls)} important pages")
@@ -193,13 +216,18 @@ class SiteContextExtractor:
         """Crawl a single sitemap file"""
         urls = []
         try:
-            async with self.session.get(sitemap_url) as resp:
-                if resp.status == 200:
-                    content = await resp.text()
-                    root = ET.fromstring(content)
-                    namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
-                    url_elements = root.findall('.//ns:url/ns:loc', namespace)
-                    urls = [url.text for url in url_elements]
+            if not self._is_same_target_host(sitemap_url):
+                logger.warning(f"⚠️  Skipping off-host sitemap URL: {sitemap_url}")
+                return []
+            _, _, content = await safe_fetch_url_text(self.session, sitemap_url, timeout_seconds=12.0)
+            root = ET.fromstring(content)
+            namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+            url_elements = root.findall('.//ns:url/ns:loc', namespace)
+            urls = [
+                (url.text or "").strip()
+                for url in url_elements
+                if self._is_same_target_host((url.text or "").strip())
+            ]
         except Exception as e:
             logger.error(f"Error crawling sub-sitemap {sitemap_url}: {e}")
         return urls
@@ -230,61 +258,59 @@ class SiteContextExtractor:
     async def _extract_page_content(self, url: str) -> Dict[str, Any]:
         """Extract structured content from a single page"""
         try:
-            async with self.session.get(url, timeout=10) as resp:
-                if resp.status != 200:
-                    return {'error': f'Status {resp.status}'}
-                    
-                html = await resp.text()
-                soup = BeautifulSoup(html, 'html.parser')
-                
-                # Remove script and style elements
-                for script in soup(['script', 'style']):
-                    script.decompose()
-                
-                # Extract structured data
-                content = {
-                    'url': url,
-                    'title': soup.find('title').text if soup.find('title') else '',
-                    'meta_description': '',
-                    'headings': {},
-                    'text_content': '',
-                    'links': [],
-                    'images': [],
-                    'structured_data': {}
-                }
-                
-                # Meta description
-                meta_desc = soup.find('meta', attrs={'name': 'description'})
-                if meta_desc:
-                    content['meta_description'] = meta_desc.get('content', '')
-                
-                # Headings
-                for level in range(1, 4):
-                    headings = soup.find_all(f'h{level}')
-                    content['headings'][f'h{level}'] = [h.text.strip() for h in headings]
-                
-                # Main text content
-                main_content = soup.find('main') or soup.find('article') or soup.find('body')
-                if main_content:
-                    content['text_content'] = main_content.get_text(separator=' ', strip=True)[:5000]
-                
-                # Extract links
-                for link in soup.find_all('a', href=True):
-                    href = link['href']
-                    text = link.get_text(strip=True)
-                    if text and (href.startswith('/') or self.base_url in href):
-                        content['links'].append({'text': text, 'href': href})
-                
-                # Look for specific content types
-                for content_type, selectors in self.important_selectors.items():
-                    for selector in selectors:
-                        elements = soup.select(selector)
-                        if elements:
-                            content['structured_data'][content_type] = [
-                                elem.get_text(strip=True)[:500] for elem in elements[:5]
-                            ]
-                
-                return content
+            if not self._is_same_target_host(url):
+                return {'error': 'Disallowed target URL'}
+            _, _, html = await safe_fetch_url_text(self.session, url, timeout_seconds=10.0)
+            soup = BeautifulSoup(html, 'html.parser')
+            
+            # Remove script and style elements
+            for script in soup(['script', 'style']):
+                script.decompose()
+            
+            # Extract structured data
+            content = {
+                'url': url,
+                'title': soup.find('title').text if soup.find('title') else '',
+                'meta_description': '',
+                'headings': {},
+                'text_content': '',
+                'links': [],
+                'images': [],
+                'structured_data': {}
+            }
+            
+            # Meta description
+            meta_desc = soup.find('meta', attrs={'name': 'description'})
+            if meta_desc:
+                content['meta_description'] = meta_desc.get('content', '')
+
+            # Headings
+            for level in range(1, 4):
+                headings = soup.find_all(f'h{level}')
+                content['headings'][f'h{level}'] = [h.text.strip() for h in headings]
+
+            # Main text content
+            main_content = soup.find('main') or soup.find('article') or soup.find('body')
+            if main_content:
+                content['text_content'] = main_content.get_text(separator=' ', strip=True)[:5000]
+
+            # Extract links
+            for link in soup.find_all('a', href=True):
+                href = link['href']
+                text = link.get_text(strip=True)
+                if text and (href.startswith('/') or self.base_url in href):
+                    content['links'].append({'text': text, 'href': href})
+
+            # Look for specific content types
+            for content_type, selectors in self.important_selectors.items():
+                for selector in selectors:
+                    elements = soup.select(selector)
+                    if elements:
+                        content['structured_data'][content_type] = [
+                            elem.get_text(strip=True)[:500] for elem in elements[:5]
+                        ]
+
+            return content
                 
         except Exception as e:
             logger.error(f"Error extracting {url}: {e}")
