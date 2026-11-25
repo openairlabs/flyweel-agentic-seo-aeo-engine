@@ -1,7 +1,23 @@
 
+> [!WARNING]
+> **Unmaintained / Deprecated (Legacy V1):** This repository is no longer actively maintained and is kept public for historical reference only.
+>
+> **Use the new successor instead: [Fleo by Flyweel (`openairlabs/fleo-by-flyweel`)](https://github.com/openairlabs/fleo-by-flyweel)**
+>
+> ```bash
+> npx flyweel-fleo
+> ```
+>
+> **Why upgrade to Fleo?**
+> - **Zero-touch setup (`npx flyweel-fleo`):** Full-screen interactive TUI wizard that extracts your brand context automatically (no manual JSON editing or search-and-replace).
+> - **Works with any stack:** Multi-framework adapters for Next.js, Astro, Webflow, Framer, Nuxt, SvelteKit, Remix, and Markdown, plus drop-in `agent-handoff.md` packets for coding agents.
+> - **Security-hardened & actively maintained:** Audited MDX/JSX sanitization, SSRF protections, multi-provider BYOK routing, and active CI/quality gates.
+> - **Links:** [GitHub (`openairlabs/fleo-by-flyweel`)](https://github.com/openairlabs/fleo-by-flyweel) | [npm (`flyweel-fleo`)](https://www.npmjs.com/package/flyweel-fleo)
+
 ![AEO Engine Architecture Overview](assets/readme-hero.png)
 ![Release](https://www.shieldcn.dev/github/release/openairlabs/flyweel-agentic-seo-aeo-engine.svg?size=sm&labelColor=baf1d6&color=284a39&labelTextColor=112320&valueColor=112320&logoColor=162018)
-V2.0 coming soon!
+
+**New version is live:** [Fleo by Flyweel (`openairlabs/fleo-by-flyweel`)](https://github.com/openairlabs/fleo-by-flyweel) (`npx flyweel-fleo`)
 
 *Originally built by [Flyweel](https://flyweel.co)*
 
@@ -12,12 +28,12 @@ Interactive CLI tool with Rich prompts, GSC-driven SEO optimization, and direct 
 
 👋 **A note from Reuben, CEO & Founder of Flyweel:**
 
-I'm a performance marketer by trade, not a software engineer. I built this initial release of our Agentic Content Engine for our own organic growth and it took us from almost zero to **9,000 search impressions in just 60-90 days**. Because I am largely non-technical (our engineering team has only done a light review of this specific codebase), it might not be perfect. If you spot any issues, please feel free to let us know, open a PR to contribute, or start a Discussion! 
+I'm a performance marketer by trade, not a software engineer. I built this initial release of our Agentic Content Engine for our own organic growth and it took us from almost zero to **9,000 search impressions in just 60-90 days**. Because I am largely non-technical (our engineering team has only done a light review of this specific codebase), it might not be perfect.
 
-We are currently working on a massive upgraded version of this engine, but it isn't quite stable yet. **If you'd like us to open-source the V2 when it's ready, let us know by leaving a ⭐ Star on this repo!**
+**Update:** The upgraded V2 engine is now open-source and actively maintained as **[Fleo by Flyweel (`openairlabs/fleo-by-flyweel`)](https://github.com/openairlabs/fleo-by-flyweel)**! Run `npx flyweel-fleo` to try it out, and please open any issues, PRs, or discussions over in the new repo.
 
 P.S. Want to see what else we're building? 
-[Click here to try Flyweel and join our platform!](https://flyweel.co)*
+[Click here to try Flyweel and join our platform!](https://flyweel.co)
 
 ## 🛠 Getting Started for Your Brand
 
@@ -38,8 +54,8 @@ To use this engine for your own company, follow these steps to customize the bra
 
 **Complete Guide for All Skill Levels**
 
-[![Tests](https://github.com/yourusername/FLYWEEL-AGENTIC-CONTENT-ENGINE/workflows/V2%20Content%20Engine%20Tests/badge.svg)](https://github.com/yourusername/FLYWEEL-AGENTIC-CONTENT-ENGINE/actions)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Tests](https://github.com/openairlabs/flyweel-agentic-seo-aeo-engine/actions/workflows/tests.yml/badge.svg)](https://github.com/openairlabs/flyweel-agentic-seo-aeo-engine/actions/workflows/tests.yml)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 > A lean, blazing-fast AI content generator that produces SEO-optimized blog posts using multi-model AI orchestration. Refactored for lower complexity and clearer modules while maintaining all quality features.
